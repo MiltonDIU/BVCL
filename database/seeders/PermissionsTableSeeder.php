@@ -119,13 +119,54 @@ class PermissionsTableSeeder extends Seeder
 //                'id'    => 27,
 //                'title' => 'profile_access',
 //            ],
+//            [
+//                'id'    => 28,
+//                'title' => 'setting_edit',
+//            ],
+//            [
+//                'id'    => 29,
+//                'title' => 'setting_access',
+//            ],
+
+//            [
+//                'id'    => 30,
+//                'title' => 'business_category_create',
+//            ],
+//            [
+//                'id'    => 31,
+//                'title' => 'business_category_edit',
+//            ],
+//            [
+//                'id'    => 32,
+//                'title' => 'business_category_show',
+//            ],
+//            [
+//                'id'    => 33,
+//                'title' => 'business_category_delete',
+//            ],
+//            [
+//                'id'    => 34,
+//                'title' => 'business_category_access',
+//            ],
             [
-                'id'    => 28,
-                'title' => 'setting_edit',
+                'id'    => 35,
+                'title' => 'business_create',
             ],
             [
-                'id'    => 29,
-                'title' => 'setting_access',
+                'id'    => 36,
+                'title' => 'business_edit',
+            ],
+            [
+                'id'    => 37,
+                'title' => 'business_show',
+            ],
+            [
+                'id'    => 38,
+                'title' => 'business_delete',
+            ],
+            [
+                'id'    => 39,
+                'title' => 'business_access',
             ],
 
         ];

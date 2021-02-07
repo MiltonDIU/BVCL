@@ -24,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('Site', 'App\Models\Setting');
+        $loader->alias('Site', 'App\Models\Site');
     }
 }

@@ -11,6 +11,8 @@ use App\Http\Controllers\UserVerificationController;
 use App\Http\Controllers\Admin\CountriesController;
 use App\Http\Controllers\Admin\ProfilesController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\BusinessCategoryController;
+use App\Http\Controllers\Admin\BusinessController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,6 +36,10 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 
+Route::get('not-allowed', function (){
+    return view('admin.not-allowed');
+})->name('not-allowed');
+
 
 Auth::routes(['register' => true]);
 Route::get('userVerification/{token}', [UserVerificationController::class ,'approve'])->name('userVerification');
@@ -47,7 +53,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         'audit-logs' => AuditLogsController::class,
         'countries' => CountriesController::class,
         'profiles' => ProfilesController::class,
-        //'settings' => SettingsController::class,
+        'business-categories' => BusinessCategoryController::class,
+        'businesses' => BusinessController::class,
     ]);
     // Settings
 //    Route::resources(['permissions' => SettingsController::class],['except' => ['create', 'store', 'show', 'destroy']]);
@@ -57,7 +64,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('settings', [SettingsController::class, 'edit'])->name('settings.edit');
     Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
 
+    // Business Categories
+    Route::delete('business-categories/destroy', [BusinessCategoryController::class, 'massDestroy'])->name('business-categories.massDestroy');
 
+    // Businesses
+    Route::delete('businesses/destroy', [BusinessController::class, 'massDestroy'])->name('businesses.massDestroy');
+    Route::post('businesses/media', 'BusinessController@storeMedia')->name('businesses.storeMedia');
+    Route::post('businesses/ckmedia', 'BusinessController@storeCKEditorImages')->name('businesses.storeCKEditorImages');
 
 
     Route::get('/', [HomeController::class, 'index']);
@@ -66,7 +79,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::delete('users/destroy', [UsersController::class, 'massDestroy'])->name('users.massDestroy');
     Route::delete('countries/destroy', [CountriesController::class, 'massDestroy'])->name('countries.massDestroy');
     Route::delete('profiles/destroy', [ProfilesController::class, 'massDestroy'])->name('profiles.massDestroy');
-
+//profile
     Route::post('profiles/media', [ProfilesController::class, 'storeMedia'])->name('profiles.storeMedia');
     Route::post('profiles/ckmedia', [ProfilesController::class, 'storeCKEditorImages'])->name('profiles.storeCKEditorImages');
 
@@ -87,7 +100,3 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
     }
 });
 
-// Settings
-Route::post('settings/media', 'SettingsController@storeMedia')->name('settings.storeMedia');
-Route::post('settings/ckmedia', 'SettingsController@storeCKEditorImages')->name('settings.storeCKEditorImages');
-Route::resource('settings', 'SettingsController', ['except' => ['create', 'store', 'show', 'destroy']]);

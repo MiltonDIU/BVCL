@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Business;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use \DateTimeInterface;
-
 class Setting extends Model implements HasMedia
 {
     use InteractsWithMedia, HasFactory;
@@ -122,8 +122,5 @@ class Setting extends Model implements HasMedia
 
     }
 
-    public static function config(){
-        $settings = Setting::find(1);
-        return $settings;
-    }
+
 }

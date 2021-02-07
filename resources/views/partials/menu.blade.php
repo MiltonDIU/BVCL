@@ -77,6 +77,27 @@
                 </a>
             </li>
         @endcan
+
+        @can('business_category_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.business-categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/business-categories") || request()->is("admin/business-categories/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.businessCategory.title') }}
+                </a>
+            </li>
+        @endcan
+        @can('business_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.businesses.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/businesses") || request()->is("admin/businesses/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.business.title') }}
+                </a>
+            </li>
+        @endcan
         @can('profile_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.profiles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin.profiles") || request()->is("admin.profiles/*") ? "c-active" : "" }}">
