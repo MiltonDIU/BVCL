@@ -95,10 +95,18 @@
                 {{ trans('cruds.business.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#user_services" role="tab" data-toggle="tab">
+                {{ trans('cruds.service.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="user_businesses">
             @includeIf('admin.users.relationships.userBusinesses', ['businesses' => $user->userBusinesses])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="user_services">
+            @includeIf('admin.users.relationships.userServices', ['services' => $user->userServices])
         </div>
     </div>
 </div>

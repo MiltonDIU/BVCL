@@ -137,4 +137,9 @@ class User extends Authenticatable
         return $this->hasMany(Business::class, 'user_id', 'id');
     }
 
+    public function userServices()
+    {
+        return $this->hasMany(Service::class, 'user_id', 'id');
+    }
+
 }

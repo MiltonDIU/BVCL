@@ -168,25 +168,45 @@ class PermissionsTableSeeder extends Seeder
 //                'id'    => 39,
 //                'title' => 'business_access',
 //            ],
+//            [
+//                'id'    => 40,
+//                'title' => 'service_status_create',
+//            ],
+//            [
+//                'id'    => 41,
+//                'title' => 'service_status_edit',
+//            ],
+//            [
+//                'id'    => 42,
+//                'title' => 'service_status_show',
+//            ],
+//            [
+//                'id'    => 43,
+//                'title' => 'service_status_delete',
+//            ],
+//            [
+//                'id'    => 44,
+//                'title' => 'service_status_access',
+//            ],
             [
-                'id'    => 40,
-                'title' => 'service_status_create',
+                'id'    => 45,
+                'title' => 'service_create',
             ],
             [
-                'id'    => 41,
-                'title' => 'service_status_edit',
+                'id'    => 46,
+                'title' => 'service_edit',
             ],
             [
-                'id'    => 42,
-                'title' => 'service_status_show',
+                'id'    => 47,
+                'title' => 'service_show',
             ],
             [
-                'id'    => 43,
-                'title' => 'service_status_delete',
+                'id'    => 48,
+                'title' => 'service_delete',
             ],
             [
-                'id'    => 44,
-                'title' => 'service_status_access',
+                'id'    => 49,
+                'title' => 'service_access',
             ],
         ];
 

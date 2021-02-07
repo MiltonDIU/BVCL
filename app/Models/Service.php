@@ -10,15 +10,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use \DateTimeInterface;
 
-class ServiceStatus extends Model implements HasMedia
+class Service extends Model implements HasMedia
 {
     use SoftDeletes, InteractsWithMedia, HasFactory;
 
-    public $table = 'service_statuses';
+    public $table = 'services';
 
-    const IS_ACTIVE_RADIO = [
-        '1' => 'Yes',
-        '0' => 'No',
+    protected $appends = [
+        'document',
     ];
 
     protected $dates = [
@@ -28,10 +27,10 @@ class ServiceStatus extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'user_id',
+        'service_status_id',
         'name',
-        'slug',
-        'is_active',
-        'message',
+        'description',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -47,9 +46,19 @@ class ServiceStatus extends Model implements HasMedia
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
-    public function serviceStatusServices()
+
+    public function user()
     {
-        return $this->hasMany(Service::class, 'service_status_id', 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function service_status()
+    {
+        return $this->belongsTo(ServiceStatus::class, 'service_status_id');
+    }
+
+    public function getDocumentAttribute()
+    {
+        return $this->getMedia('document')->last();
+    }
 }

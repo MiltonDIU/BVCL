@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\BusinessCategoryController;
 use App\Http\Controllers\Admin\BusinessController;
 use App\Http\Controllers\Admin\ServiceStatusController;
+use App\Http\Controllers\Admin\ServiceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,6 +58,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         'business-categories' => BusinessCategoryController::class,
         'businesses' => BusinessController::class,
         'service-statuses' => ServiceStatusController::class,
+        'services' => ServiceController::class,
     ]);
     // Settings
 //    Route::resources(['permissions' => SettingsController::class],['except' => ['create', 'store', 'show', 'destroy']]);
@@ -82,6 +84,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::delete('countries/destroy', [CountriesController::class, 'massDestroy'])->name('countries.massDestroy');
     Route::delete('profiles/destroy', [ProfilesController::class, 'massDestroy'])->name('profiles.massDestroy');
     Route::delete('service-statuses/destroy', [ServiceStatusController::class, 'massDestroy'])->name('service-statuses.massDestroy');
+    Route::delete('services/destroy', [ServiceController::class, 'massDestroy'])->name('services.massDestroy');
 //profile
     Route::post('profiles/media', [ProfilesController::class, 'storeMedia'])->name('profiles.storeMedia');
     Route::post('profiles/ckmedia', [ProfilesController::class, 'storeCKEditorImages'])->name('profiles.storeCKEditorImages');
@@ -90,6 +93,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 // Service Statuses
     Route::post('service-statuses/media', 'ServiceStatusController@storeMedia')->name('service-statuses.storeMedia');
     Route::post('service-statuses/ckmedia', 'ServiceStatusController@storeCKEditorImages')->name('service-statuses.storeCKEditorImages');
+
+// Services
+    Route::post('services/media', 'ServiceController@storeMedia')->name('services.storeMedia');
+    Route::post('services/ckmedia', 'ServiceController@storeCKEditorImages')->name('services.storeCKEditorImages');
+
 
     // Audit Logs
     //Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
@@ -107,6 +115,4 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
         Route::put('my-profile', [ProfilesController::class, 'update'])->name('my-profile.update');
     }
 });
-
-
 
