@@ -98,6 +98,16 @@
                 </a>
             </li>
         @endcan
+        @can('service_status_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.service-statuses.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/service-statuses") || request()->is("admin/service-statuses/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.serviceStatus.title') }}
+                </a>
+            </li>
+        @endcan
         @can('profile_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.profiles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin.profiles") || request()->is("admin.profiles/*") ? "c-active" : "" }}">
