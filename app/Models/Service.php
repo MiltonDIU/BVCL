@@ -61,4 +61,11 @@ class Service extends Model implements HasMedia
     {
         return $this->getMedia('document')->last();
     }
+
+    public static function boot()
+    {
+        parent::boot();
+        Service::observe(new \App\Observers\ServiceActionObserver);
+    }
+
 }

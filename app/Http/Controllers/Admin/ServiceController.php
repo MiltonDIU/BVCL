@@ -66,11 +66,11 @@ class ServiceController extends Controller
     {
         abort_if(Gate::denies('service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if (!auth()->user()->is_admin) {
-            $data =  Service::where('id',$service->id)->where('user_id',auth()->id())->get()->first();
-            if ($data==null){
+            if (auth()->id()!=$service->user_id){
                 return redirect('not-allowed');
             }
         }
+
 //        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $service_statuses = ServiceStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -82,6 +82,11 @@ class ServiceController extends Controller
 
     public function update(UpdateServiceRequest $request, Service $service)
     {
+        if (!auth()->user()->is_admin) {
+            if (auth()->id()!=$service->user_id){
+                return redirect('not-allowed');
+            }
+        }
         $data  = $request->all();
         $service->update($data);
         if ($request->input('document', false)) {
@@ -102,12 +107,13 @@ class ServiceController extends Controller
     public function show(Service $service)
     {
         abort_if(Gate::denies('service_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if (!auth()->user()->is_admin) {
-            $data =  Service::where('id',$service->id)->where('user_id',auth()->id())->get()->first();
-            if ($data==null){
+            if (auth()->id()!=$service->user_id){
                 return redirect('not-allowed');
             }
         }
+
         $service->load('user', 'service_status');
 
         return view('admin.services.show', compact('service'));
@@ -116,7 +122,11 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         abort_if(Gate::denies('service_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        if (!auth()->user()->is_admin) {
+            if (auth()->id()!=$service->user_id){
+                return redirect('not-allowed');
+            }
+        }
         $service->delete();
 
         return back();
