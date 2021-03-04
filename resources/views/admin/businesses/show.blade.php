@@ -44,37 +44,54 @@
                             {{ trans('cruds.business.fields.business_category') }}
                         </th>
                         <td>
-                            @foreach($business->business_categories as $key => $business_category)
-                                <span class="label label-info">{{ $business_category->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.business.fields.user') }}
-                        </th>
-                        <td>
-                            {{ $business->user->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.business.fields.location') }}
-                        </th>
-                        <td>
-                            {{ $business->location }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.businesses.index') }}">
-                        {{ trans('global.back_to_list') }}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+@if(Gate::check('service_status_access') )
+   @foreach($business->business_categories as $key => $business_category)
+<a class="badge badge-info" href="{{ route('admin.business-categories.show', $business_category->id) }}">
+    <span >{{ $business_category->name }}</span>
+</a>
+   @endforeach
+    @else
+        @foreach($business->business_categories as $key => $business_category)
+                <span class="badge badge-info">{{ $business_category->name }}</span>
+        @endforeach
+@endif
+
+
+
+
+</td>
+</tr>
+<tr>
+<th>
+   {{ trans('cruds.business.fields.user') }}
+</th>
+<td>
+   @can('profile_show')
+       <a class="btn btn-xs btn-primary" href="{{ route('admin.profiles.show', $business->user->id) }}">
+          Go to  {{ $business->user->name ?? '' }} Profile
+       </a>
+
+       @endcan
+</td>
+</tr>
+<tr>
+<th>
+   {{ trans('cruds.business.fields.location') }}
+</th>
+<td>
+   {{ $business->location }}
+</td>
+</tr>
+</tbody>
+</table>
+<div class="form-group">
+<a class="btn btn-default" href="{{ route('admin.businesses.index') }}">
+{{ trans('global.back_to_list') }}
+</a>
+</div>
+</div>
+</div>
+</div>
 
 
 

@@ -226,7 +226,7 @@ return [
         ],
     ],
     'businessCategory' => [
-        'title'          => 'Business Category',
+        'title'          => 'List of Business Category',
         'title_singular' => 'Business Category',
         'fields'         => [
             'id'                => 'ID',
@@ -270,7 +270,7 @@ return [
         ],
     ],
     'serviceStatus'    => [
-        'title'          => 'Service Status',
+        'title'          => 'List of Service Status',
         'title_singular' => 'Service Status',
         'fields'         => [
             'id'                => 'ID',
@@ -292,7 +292,7 @@ return [
         ],
     ],
     'service'          => [
-        'title'          => 'Service',
+        'title'          => 'Services',
         'title_singular' => 'Service',
         'fields'         => [
             'id'                    => 'ID',

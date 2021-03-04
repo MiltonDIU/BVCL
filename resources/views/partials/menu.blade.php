@@ -18,7 +18,7 @@
         @can('user_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-users-cog c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.userManagement.title') }}
@@ -47,7 +47,7 @@
                     @can('user_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.users.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/users") || request()->is("admin/users/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-user c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-users c-sidebar-nav-icon">
 
                                 </i>
                                 {{ trans('cruds.user.title') }}
@@ -67,21 +67,22 @@
                 </ul>
             </li>
         @endcan
-        @can('setting_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.settings.edit") }}" class="c-sidebar-nav-link {{ request()->is("admin/settings") || request()->is("admin/settings/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
+
+        @if(Gate::check('business_category_access') || Gate::check('business_access'))
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon">
                     </i>
-                    {{ trans('cruds.setting.title') }}
+                    {{ trans('cruds.business.title') }}
                 </a>
-            </li>
-        @endcan
+                <ul class="c-sidebar-nav-dropdown-items">
+
 
         @can('business_category_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.business-categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/business-categories") || request()->is("admin/business-categories/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-list-alt c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.businessCategory.title') }}
@@ -91,37 +92,95 @@
         @can('business_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.businesses.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/businesses") || request()->is("admin/businesses/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-business-time c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.business.title') }}
                 </a>
             </li>
         @endcan
-        @can('service_status_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.service-statuses.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/service-statuses") || request()->is("admin/service-statuses/*") ? "c-active" : "" }}">
+                </ul>
+            </li>
+        @endif
+
+
+
+
+        @if(Gate::check('setting_access') || Gate::check('country_access'))
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
                     </i>
-                    {{ trans('cruds.serviceStatus.title') }}
+                    {{ trans('cruds.setting.title') }}
                 </a>
-            </li>
-        @endcan
-        @can('service_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.services.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/services") || request()->is("admin/services/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('setting_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.settings.edit") }}" class="c-sidebar-nav-link {{ request()->is("admin/settings") || request()->is("admin/settings/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-wrench c-sidebar-nav-icon">
 
+                                </i>
+                                {{ trans('cruds.setting.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                        @can('country_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route("admin.countries.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/countries") || request()->is("admin/countries/*") ? "c-active" : "" }}">
+                                    <i class="fa-fw fas fa-globe c-sidebar-nav-icon">
+                                    </i>
+                                    {{ trans('cruds.country.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                </ul>
+            </li>
+        @endif
+
+
+
+
+
+        @if(Gate::check('service_status_access') || Gate::check('service_access'))
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fab fa-servicestack c-sidebar-nav-icon">
                     </i>
                     {{ trans('cruds.service.title') }}
                 </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('service_status_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.service-statuses.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/service-statuses") || request()->is("admin/service-statuses/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.serviceStatus.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('service_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.services.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/services") || request()->is("admin/services/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-calendar-check c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.service.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
             </li>
-        @endcan
-        @can('profile_access')
+        @endif
+
+
+
+
+    @can('profile_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.profiles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin.profiles") || request()->is("admin.profiles/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-user c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.profile.title') }}
@@ -132,7 +191,7 @@
         @can('profile_edit')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("profile.my-profile.edit") }}" class="c-sidebar-nav-link {{ request()->is("profile/my-profile") || request()->is("profile/my-profile/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="far fa-id-card c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('global.my_profile') }}
@@ -151,16 +210,7 @@
                 </li>
             @endcan
         @endif
-        @can('country_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.countries.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/countries") || request()->is("admin/countries/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
-                    </i>
-                    {{ trans('cruds.country.title') }}
-                </a>
-            </li>
-        @endcan
 
         <li class="c-sidebar-nav-item">
             <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">

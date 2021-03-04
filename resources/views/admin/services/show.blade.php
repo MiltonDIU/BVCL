@@ -28,7 +28,13 @@
                             {{ trans('cruds.service.fields.user') }}
                         </th>
                         <td>
-                            {{ $service->user->name ?? '' }}
+
+                            @can('profile_show')
+                                <a class="btn btn-xs btn-primary" href="{{ route('admin.profiles.show', $service->user->id) }}">
+                                    Go to  {{ $service->user->name ?? '' }} Profile
+                                </a>
+
+                            @endcan
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +42,17 @@
                             {{ trans('cruds.service.fields.service_status') }}
                         </th>
                         <td>
-                            {{ $service->service_status->name ?? '' }}
+
+                            @if(Gate::check('service_status_show') )
+                                    <a class="badge badge-info" href="{{ route('admin.service-statuses.show', $service->service_status->id) }}">
+                                        {{ $service->service_status->name ?? '' }}
+                                    </a>
+                            @else
+                                    <span class="badge badge-info">    {{ $service->service_status->name ?? '' }}</span>
+                            @endif
+
+
+
                         </td>
                     </tr>
                     <tr>

@@ -1,8 +1,8 @@
-{{--@can('business_create')--}}
+{{--@can('service_create')--}}
 {{--    <div style="margin-bottom: 10px;" class="row">--}}
 {{--        <div class="col-lg-12">--}}
-{{--            <a class="btn btn-success" href="{{ route('admin.businesses.create') }}">--}}
-{{--                {{ trans('global.add') }} {{ trans('cruds.business.title_singular') }}--}}
+{{--            <a class="btn btn-success" href="{{ route('admin.services.create') }}">--}}
+{{--                {{ trans('global.add') }} {{ trans('cruds.service.title_singular') }}--}}
 {{--            </a>--}}
 {{--        </div>--}}
 {{--    </div>--}}
@@ -10,34 +10,34 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.business.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.service.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-businessCategoryBusinesses">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-serviceStatusServices">
                 <thead>
                 <tr>
                     <th width="10">
 
                     </th>
                     <th>
-                        {{ trans('cruds.business.fields.id') }}
+                        {{ trans('cruds.service.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.business.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.business.fields.business_category') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.business.fields.user') }}
+                        {{ trans('cruds.service.fields.user') }}
                     </th>
                     <th>
                         {{ trans('cruds.user.fields.email') }}
                     </th>
                     <th>
-                        {{ trans('cruds.business.fields.location') }}
+                        {{ trans('cruds.service.fields.service_status') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.service.fields.name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.service.fields.document') }}
                     </th>
                     <th>
                         &nbsp;
@@ -45,46 +45,48 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($businesses as $key => $business)
-                    <tr data-entry-id="{{ $business->id }}">
+                @foreach($services as $key => $service)
+                    <tr data-entry-id="{{ $service->id }}">
                         <td>
 
                         </td>
                         <td>
-                            {{ $business->id ?? '' }}
+                            {{ $service->id ?? '' }}
                         </td>
                         <td>
-                            {{ $business->name ?? '' }}
+                            {{ $service->user->name ?? '' }}
                         </td>
                         <td>
-                            @foreach($business->business_categories as $key => $item)
-                                <span class="badge badge-info">{{ $item->name }}</span>
-                            @endforeach
+                            {{ $service->user->email ?? '' }}
                         </td>
                         <td>
-                            {{ $business->user->name ?? '' }}
+                            {{ $service->service_status->name ?? '' }}
                         </td>
                         <td>
-                            {{ $business->user->email ?? '' }}
+                            {{ $service->name ?? '' }}
                         </td>
                         <td>
-                            {{ $business->location ?? '' }}
+                            @if($service->document)
+                                <a href="{{ $service->document->getUrl() }}" target="_blank">
+                                    {{ trans('global.view_file') }}
+                                </a>
+                            @endif
                         </td>
                         <td>
-                            @can('business_show')
-                                <a class="btn btn-xs btn-primary" href="{{ route('admin.businesses.show', $business->id) }}">
+                            @can('service_show')
+                                <a class="btn btn-xs btn-primary" href="{{ route('admin.services.show', $service->id) }}">
                                     {{ trans('global.view') }}
                                 </a>
                             @endcan
 
-{{--                            @can('business_edit')--}}
-{{--                                <a class="btn btn-xs btn-info" href="{{ route('admin.businesses.edit', $business->id) }}">--}}
-{{--                                    {{ trans('global.edit') }}--}}
-{{--                                </a>--}}
-{{--                            @endcan--}}
+                            @can('service_edit')
+                                <a class="btn btn-xs btn-info" href="{{ route('admin.services.edit', $service->id) }}">
+                                    {{ trans('global.edit') }}
+                                </a>
+                            @endcan
 
-{{--                            @can('business_delete')--}}
-{{--                                <form action="{{ route('admin.businesses.destroy', $business->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">--}}
+{{--                            @can('service_delete')--}}
+{{--                                <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">--}}
 {{--                                    <input type="hidden" name="_method" value="DELETE">--}}
 {{--                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
 {{--                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">--}}
@@ -106,11 +108,11 @@
 {{--    <script>--}}
 {{--        $(function () {--}}
 {{--            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)--}}
-{{--                @can('business_delete')--}}
+{{--                @can('service_delete')--}}
 {{--            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'--}}
 {{--            let deleteButton = {--}}
 {{--                text: deleteButtonTrans,--}}
-{{--                url: "{{ route('admin.businesses.massDestroy') }}",--}}
+{{--                url: "{{ route('admin.services.massDestroy') }}",--}}
 {{--                className: 'btn-danger',--}}
 {{--                action: function (e, dt, node, config) {--}}
 {{--                    var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {--}}
@@ -141,7 +143,7 @@
 {{--                order: [[ 1, 'desc' ]],--}}
 {{--                pageLength: 100,--}}
 {{--            });--}}
-{{--            let table = $('.datatable-businessCategoryBusinesses:not(.ajaxTable)').DataTable({ buttons: dtButtons })--}}
+{{--            let table = $('.datatable-serviceStatusServices:not(.ajaxTable)').DataTable({ buttons: dtButtons })--}}
 {{--            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){--}}
 {{--                $($.fn.dataTable.tables(true)).DataTable()--}}
 {{--                    .columns.adjust();--}}
