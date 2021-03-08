@@ -16,9 +16,7 @@ class BusinessCategoryController extends Controller
     public function index()
     {
         abort_if(Gate::denies('business_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $businessCategories = BusinessCategory::all();
-
         return view('admin.businessCategories.index', compact('businessCategories'));
     }
 

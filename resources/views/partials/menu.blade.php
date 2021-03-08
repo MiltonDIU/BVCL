@@ -220,6 +220,38 @@
                 {{ trans('global.logout') }}
             </a>
         </li>
+
+
+        @can('question_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.questions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/questions") || request()->is("admin/questions/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.question.title') }}
+                </a>
+            </li>
+        @endcan
+        @can('answer_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.answers.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/answers") || request()->is("admin/answers/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.answer.title') }}
+                </a>
+            </li>
+        @endcan
+        @can('assessment_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.assessments.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/assessments") || request()->is("admin/assessments/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.assessment.title') }}
+                </a>
+            </li>
+        @endcan
     </ul>
 
 </div>

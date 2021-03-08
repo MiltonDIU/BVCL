@@ -15,6 +15,9 @@ use App\Http\Controllers\Admin\BusinessCategoryController;
 use App\Http\Controllers\Admin\BusinessController;
 use App\Http\Controllers\Admin\ServiceStatusController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\QuestionsController;
+use App\Http\Controllers\Admin\AnswersController;
+use App\Http\Controllers\Admin\AssessmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,14 +55,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         'permissions' => PermissionsController::class,
         'roles' => RolesController::class,
         'users' => UsersController::class,
-        'audit-logs' => AuditLogsController::class,
         'countries' => CountriesController::class,
         'profiles' => ProfilesController::class,
         'business-categories' => BusinessCategoryController::class,
         'businesses' => BusinessController::class,
         'service-statuses' => ServiceStatusController::class,
         'services' => ServiceController::class,
+        'questions' => QuestionsController::class,
+        'answers' => AnswersController::class,
     ]);
+    Route::resources(['assessments' => AssessmentController::class],['except' => ['edit', 'update']]);
+    Route::resources(['audit-logs' => AuditLogsController::class],['except' => ['create', 'update','delete','edit']]);
     // Settings
 //    Route::resources(['permissions' => SettingsController::class],['except' => ['create', 'store', 'show', 'destroy']]);
     Route::post('settings/media', [SettingsController::class, 'storeMedia'])->name('settings.storeMedia');
@@ -85,6 +91,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::delete('profiles/destroy', [ProfilesController::class, 'massDestroy'])->name('profiles.massDestroy');
     Route::delete('service-statuses/destroy', [ServiceStatusController::class, 'massDestroy'])->name('service-statuses.massDestroy');
     Route::delete('services/destroy', [ServiceController::class, 'massDestroy'])->name('services.massDestroy');
+    // Questions
+    Route::delete('questions/destroy', [QuestionsController::class, 'massDestroy'])->name('questions.massDestroy');
+    // Assessments
+    Route::delete('assessments/destroy', [AssessmentController::class, 'massDestroy'])->name('assessments.massDestroy');
+
+    // Answers
+    Route::delete('answers/destroy', [AnswersController::class, 'massDestroy'])->name('answers.massDestroy');
+
+
 //profile
     Route::post('profiles/media', [ProfilesController::class, 'storeMedia'])->name('profiles.storeMedia');
     Route::post('profiles/ckmedia', [ProfilesController::class, 'storeCKEditorImages'])->name('profiles.storeCKEditorImages');

@@ -188,25 +188,82 @@ class PermissionsTableSeeder extends Seeder
 //                'id'    => 44,
 //                'title' => 'service_status_access',
 //            ],
+//            [
+//                'id'    => 45,
+//                'title' => 'service_create',
+//            ],
+//            [
+//                'id'    => 46,
+//                'title' => 'service_edit',
+//            ],
+//            [
+//                'id'    => 47,
+//                'title' => 'service_show',
+//            ],
+//            [
+//                'id'    => 48,
+//                'title' => 'service_delete',
+//            ],
+//            [
+//                'id'    => 49,
+//                'title' => 'service_access',
+//            ],
+
             [
-                'id'    => 45,
-                'title' => 'service_create',
+                'id'    => 50,
+                'title' => 'question_create',
             ],
             [
-                'id'    => 46,
-                'title' => 'service_edit',
+                'id'    => 51,
+                'title' => 'question_edit',
             ],
             [
-                'id'    => 47,
-                'title' => 'service_show',
+                'id'    => 52,
+                'title' => 'question_show',
             ],
             [
-                'id'    => 48,
-                'title' => 'service_delete',
+                'id'    => 53,
+                'title' => 'question_delete',
             ],
             [
-                'id'    => 49,
-                'title' => 'service_access',
+                'id'    => 54,
+                'title' => 'question_access',
+            ],
+            [
+                'id'    => 55,
+                'title' => 'answer_create',
+            ],
+            [
+                'id'    => 56,
+                'title' => 'answer_edit',
+            ],
+            [
+                'id'    => 57,
+                'title' => 'answer_show',
+            ],
+            [
+                'id'    => 58,
+                'title' => 'answer_delete',
+            ],
+            [
+                'id'    => 59,
+                'title' => 'answer_access',
+            ],
+            [
+                'id'    => 60,
+                'title' => 'assessment_create',
+            ],
+            [
+                'id'    => 61,
+                'title' => 'assessment_show',
+            ],
+            [
+                'id'    => 62,
+                'title' => 'assessment_delete',
+            ],
+            [
+                'id'    => 63,
+                'title' => 'assessment_access',
             ],
         ];
 

@@ -141,5 +141,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Service::class, 'user_id', 'id');
     }
-
+    public function userAssessments()
+    {
+        return $this->hasMany(Assessment::class, 'user_id', 'id');
+    }
 }
