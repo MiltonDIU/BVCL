@@ -209,61 +209,102 @@ class PermissionsTableSeeder extends Seeder
 //                'title' => 'service_access',
 //            ],
 
+//            [
+//                'id'    => 50,
+//                'title' => 'question_create',
+//            ],
+//            [
+//                'id'    => 51,
+//                'title' => 'question_edit',
+//            ],
+//            [
+//                'id'    => 52,
+//                'title' => 'question_show',
+//            ],
+//            [
+//                'id'    => 53,
+//                'title' => 'question_delete',
+//            ],
+//            [
+//                'id'    => 54,
+//                'title' => 'question_access',
+//            ],
+//            [
+//                'id'    => 55,
+//                'title' => 'answer_create',
+//            ],
+//            [
+//                'id'    => 56,
+//                'title' => 'answer_edit',
+//            ],
+//            [
+//                'id'    => 57,
+//                'title' => 'answer_show',
+//            ],
+//            [
+//                'id'    => 58,
+//                'title' => 'answer_delete',
+//            ],
+//            [
+//                'id'    => 59,
+//                'title' => 'answer_access',
+//            ],
+//            [
+//                'id'    => 60,
+//                'title' => 'assessment_create',
+//            ],
+//            [
+//                'id'    => 61,
+//                'title' => 'assessment_show',
+//            ],
+//            [
+//                'id'    => 62,
+//                'title' => 'assessment_delete',
+//            ],
+//            [
+//                'id'    => 63,
+//                'title' => 'assessment_access',
+//            ],
+
+//            [
+//                'id'    => 64,
+//                'title' => 'service_history_create',
+//            ],
+//            [
+//                'id'    => 65,
+//                'title' => 'service_history_edit',
+//            ],
+//            [
+//                'id'    => 66,
+//                'title' => 'service_history_show',
+//            ],
+//            [
+//                'id'    => 67,
+//                'title' => 'service_history_delete',
+//            ],
+//            [
+//                'id'    => 68,
+//                'title' => 'service_history_access',
+//            ],
+//            [
+//                'id'    => 69,
+//                'title' => 'service_assign_to',
+//            ],
+//            [
+//                'id'    => 70,
+//                'title' => 'service_history',
+//            ],
+//            [
+//                'id'    => 71,
+//                'title' => 'service_message',
+//            ],
+//            [
+//                'id'    => 72,
+//                'title' => 'service_status_change',
+//            ],
             [
-                'id'    => 50,
-                'title' => 'question_create',
-            ],
-            [
-                'id'    => 51,
-                'title' => 'question_edit',
-            ],
-            [
-                'id'    => 52,
-                'title' => 'question_show',
-            ],
-            [
-                'id'    => 53,
-                'title' => 'question_delete',
-            ],
-            [
-                'id'    => 54,
-                'title' => 'question_access',
-            ],
-            [
-                'id'    => 55,
-                'title' => 'answer_create',
-            ],
-            [
-                'id'    => 56,
-                'title' => 'answer_edit',
-            ],
-            [
-                'id'    => 57,
-                'title' => 'answer_show',
-            ],
-            [
-                'id'    => 58,
-                'title' => 'answer_delete',
-            ],
-            [
-                'id'    => 59,
-                'title' => 'answer_access',
-            ],
-            [
-                'id'    => 60,
-                'title' => 'assessment_create',
-            ],
-            [
-                'id'    => 61,
-                'title' => 'assessment_show',
-            ],
-            [
-                'id'    => 62,
-                'title' => 'assessment_delete',
-            ],
-            [
-                'id'    => 63,
-                'title' => 'assessment_access',
+                'id'    => 73,
+                'title' => 'service_comments',
             ],
         ];
 

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyServiceRequest;
+use App\Http\Requests\ServiceAssignToRequest;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Service;
+use App\Models\ServiceHistory;
 use App\Models\ServiceStatus;
 use App\Models\User;
 use Gate;
@@ -114,8 +116,7 @@ class ServiceController extends Controller
             }
         }
 
-        $service->load('user', 'service_status');
-
+        $service->load('user', 'service_status','serviceHistories');
         return view('admin.services.show', compact('service'));
     }
 
@@ -149,5 +150,88 @@ class ServiceController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function assignTo($id)
+    {
+        abort_if(Gate::denies('service_assign_to'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $service = Service::find($id);
+        $assigns = User::all()->pluck('name', 'id');
+        $service_statuses = ServiceStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.services.assign-to',compact('service','assigns','service_statuses'));
+    }
+
+    public function assignToPost(ServiceAssignToRequest $request)
+    {
+        $service = Service::find($request->service_id);
+        $data['service_status_id']  = $request->service_status_id;
+        if (!auth()->user()->is_admin) {
+            if (auth()->id()!=$service->user_id){
+                return redirect('not-allowed');
+            }
+        }
+        $service->update($data);
+        $service->assigns()->sync($request->input('assigns', []));
+        $data['user_id'] =  auth()->id();
+        $data['service_id'] =  $service->user_id;
+        $data['content'] =  $request->comments;
+        ServiceHistory::create($data);
+        return redirect()->route('admin.services.index');
+
+    }
+    public function serviceStatus($id)
+    {
+
+        abort_if(Gate::denies('service_status_change'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $service = Service::find($id);
+        $service_statuses = ServiceStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.services.status-change',compact('service','service_statuses'));
+    }
+    public function serviceStatusChange(Request $request)
+    {
+        $service = Service::find($request->service_id);
+        $data['service_status_id']  = $request->service_status_id;
+        if (!auth()->user()->is_admin) {
+            if (auth()->id()!=$service->user_id){
+                return redirect('not-allowed');
+            }
+        }
+        $service->update($data);
+        $data['user_id'] =  auth()->id();
+        $data['service_id'] =  $service->user_id;
+        $data['content'] =  $request->comments;
+        ServiceHistory::create($data);
+        return redirect()->route('admin.services.index');
+
+    }
+
+    public function comments($id)
+    {
+
+        abort_if(Gate::denies('service_status_change'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $service = Service::find($id);
+        return view('admin.services.comments',compact('service'));
+    }
+    public function serviceComments(Request $request)
+    {
+        $service = Service::find($request->service_id);
+        if (!auth()->user()->is_admin) {
+            if (auth()->id()!=$service->user_id){
+                return redirect('not-allowed');
+            }
+        }
+        $data['user_id'] =  auth()->id();
+        $data['service_id'] =  $service->user_id;
+        $data['content'] =  $request->comments;
+        ServiceHistory::create($data);
+        return redirect()->route('admin.services.index');
+    }
+    public function history($id)
+    {
+        abort_if(Gate::denies('service_history'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $service = Service::with('serviceHistories')->find($id);
+        return view('admin.services.history',compact('service'));
     }
 }

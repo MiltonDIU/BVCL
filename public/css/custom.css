@@ -126,3 +126,7 @@ table.dataTable thead .sorting_desc {
 .c-sidebar-brand .c-sidebar-brand-full:hover {
     color: inherit;
 }
+
+.c-sidebar-nav-dropdown > ul > li >a{
+    padding-left: 75px!important;
+}

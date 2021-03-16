@@ -142,7 +142,7 @@
 
 
 
-        @if(Gate::check('service_status_access') || Gate::check('service_access'))
+        @if(Gate::check('service_status_access') || Gate::check('service_access') || Gate::check('service_history_access'))
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fab fa-servicestack c-sidebar-nav-icon">
@@ -153,7 +153,7 @@
                     @can('service_status_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.service-statuses.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/service-statuses") || request()->is("admin/service-statuses/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-list-alt c-sidebar-nav-icon">
 
                                 </i>
                                 {{ trans('cruds.serviceStatus.title') }}
@@ -170,6 +170,18 @@
                             </a>
                         </li>
                     @endcan
+
+                    @can('service_history_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.service-histories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/service-histories") || request()->is("admin/service-histories/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fa fa-history c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.serviceHistory.title') }}
+                            </a>
+                        </li>
+                    @endcan
+
                 </ul>
             </li>
         @endif
@@ -221,37 +233,45 @@
             </a>
         </li>
 
-
-        @can('question_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.questions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/questions") || request()->is("admin/questions/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
-
-                    </i>
-                    {{ trans('cruds.question.title') }}
-                </a>
-            </li>
-        @endcan
-        @can('answer_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.answers.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/answers") || request()->is("admin/answers/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
-
-                    </i>
-                    {{ trans('cruds.answer.title') }}
-                </a>
-            </li>
-        @endcan
-        @can('assessment_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.assessments.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/assessments") || request()->is("admin/assessments/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
-
+        @if(Gate::check('question_access') || Gate::check('answer_access')|| Gate::check('assessment_access'))
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fab fa-servicestack c-sidebar-nav-icon">
                     </i>
                     {{ trans('cruds.assessment.title') }}
                 </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('question_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.questions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/questions") || request()->is("admin/questions/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-question c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.question.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('answer_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.answers.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/answers") || request()->is("admin/answers/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-diagnoses c-sidebar-nav-icon">
+                                </i>
+                                {{ trans('cruds.answer.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('assessment_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.assessments.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/assessments") || request()->is("admin/assessments/*") ? "c-active" : "" }}">
+                                <i class="fas fa-diagnoses c-sidebar-nav-icon"></i>
+                                {{ trans('cruds.assessment.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
             </li>
-        @endcan
+
+        @endif
     </ul>
 
 </div>

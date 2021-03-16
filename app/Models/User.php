@@ -145,4 +145,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Assessment::class, 'user_id', 'id');
     }
+
+    public function assignServices()
+    {
+        return $this->belongsToMany(Service::class);
+    }
 }

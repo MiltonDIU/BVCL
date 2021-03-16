@@ -74,6 +74,28 @@
                                 @endif
                             </td>
                             <td>
+                                @can('service_comments')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.service.comments',$service->id) }}">
+                                        {{ trans('cruds.service.service_comments') }}
+                                    </a>
+                                @endcan
+
+                                @can('service_status_change')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.service.status',$service->id) }}">
+                                        {{ trans('cruds.service.service_status_change') }}
+                                    </a>
+                                @endcan
+                                @can('service_history')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.service.history',$service->id) }}">
+                                        {{ trans('cruds.service.history') }}
+                                    </a>
+                                @endcan
+
+                                @can('service_assign_to')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.service.assign',$service->id) }}">
+                                        {{ trans('cruds.service.assign_to') }}
+                                    </a>
+                                @endcan
                                 @can('service_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.services.show', $service->id) }}">
                                         {{ trans('global.view') }}

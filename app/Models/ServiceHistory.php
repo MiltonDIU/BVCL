@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,11 +11,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use \DateTimeInterface;
 
-class Service extends Model implements HasMedia
+class ServiceHistory extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
-    public $table = 'services';
+    public $table = 'service_histories';
 
     protected $appends = [
         'document',
@@ -28,9 +29,8 @@ class Service extends Model implements HasMedia
 
     protected $fillable = [
         'user_id',
-        'service_status_id',
-        'name',
-        'description',
+        'service_id',
+        'content',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -52,28 +52,13 @@ class Service extends Model implements HasMedia
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function service_status()
+    public function service()
     {
-        return $this->belongsTo(ServiceStatus::class, 'service_status_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
     public function getDocumentAttribute()
     {
-        return $this->getMedia('document')->last();
+        return $this->getMedia('document');
     }
-
-    public static function boot()
-    {
-        parent::boot();
-        Service::observe(new \App\Observers\ServiceActionObserver);
-    }
-    public function assigns()
-    {
-        return $this->belongsToMany(User::class);
-    }
-    public function serviceHistories()
-    {
-        return $this->hasMany(ServiceHistory::class, 'service_id', 'id');
-    }
-
 }

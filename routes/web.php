@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\QuestionsController;
 use App\Http\Controllers\Admin\AnswersController;
 use App\Http\Controllers\Admin\AssessmentController;
+use App\Http\Controllers\Admin\ServiceHistoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,9 +64,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         'services' => ServiceController::class,
         'questions' => QuestionsController::class,
         'answers' => AnswersController::class,
+        'service-histories' => ServiceHistoryController::class,
     ]);
     Route::resources(['assessments' => AssessmentController::class],['except' => ['edit', 'update']]);
     Route::resources(['audit-logs' => AuditLogsController::class],['except' => ['create', 'update','delete','edit']]);
+
+
+
+
     // Settings
 //    Route::resources(['permissions' => SettingsController::class],['except' => ['create', 'store', 'show', 'destroy']]);
     Route::post('settings/media', [SettingsController::class, 'storeMedia'])->name('settings.storeMedia');
@@ -81,9 +87,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::delete('businesses/destroy', [BusinessController::class, 'massDestroy'])->name('businesses.massDestroy');
     Route::post('businesses/media', 'BusinessController@storeMedia')->name('businesses.storeMedia');
     Route::post('businesses/ckmedia', 'BusinessController@storeCKEditorImages')->name('businesses.storeCKEditorImages');
+    // service assign to
+    Route::get('services/{id}/assign-to', [ServiceController::class,'assignTo'])->name('service.assign');
+    Route::get('services/{id}/history', [ServiceController::class,'history'])->name('service.history');
+    Route::post('services/assign-to', [ServiceController::class,'assignToPost'])->name('service.assign-to');
+
+    // service status change
+    Route::get('services/{id}/service-status', [ServiceController::class,'serviceStatus'])->name('service.status');
+    Route::post('services/service-status-change', [ServiceController::class,'serviceStatusChange'])->name('service.service-status-change');
+
+    // service comments
+    Route::get('services/{id}/comments', [ServiceController::class,'comments'])->name('service.comments');
+    Route::post('services/comments', [ServiceController::class,'serviceComments'])->name('service.service-comments');
+
 
 
     Route::get('/', [HomeController::class, 'index']);
+    Route::delete('service-histories/destroy', [ServiceHistoryController::class, 'massDestroy'])->name('service-histories.massDestroy');
     Route::delete('permissions/destroy', [PermissionsController::class, 'massDestroy'])->name('permissions.massDestroy');
     Route::delete('roles/destroy', [RolesController::class, 'massDestroy'])->name('roles.massDestroy');
     Route::delete('users/destroy', [UsersController::class, 'massDestroy'])->name('users.massDestroy');
@@ -113,6 +133,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::post('services/media', 'ServiceController@storeMedia')->name('services.storeMedia');
     Route::post('services/ckmedia', 'ServiceController@storeCKEditorImages')->name('services.storeCKEditorImages');
 
+    // Service Histories
+    Route::post('service-histories/media', 'ServiceHistoryController@storeMedia')->name('service-histories.storeMedia');
+    Route::post('service-histories/ckmedia', 'ServiceHistoryController@storeCKEditorImages')->name('service-histories.storeCKEditorImages');
 
     // Audit Logs
     //Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
