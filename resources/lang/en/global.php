@@ -3,6 +3,9 @@
 return [
     'actions'                              => 'Actions',
     'add'                                  => 'Add',
+    'apply'                                => 'Apply',
+    'attendance'                           => 'Attendance',
+    'alreadyApply'                         => 'You are already applied',
     'allRightsReserved'                    => 'All rights reserved.',
     'areYouSure'                           => 'Are you sure?',
     'clickHereToVerify'                    => 'Click here to verify',

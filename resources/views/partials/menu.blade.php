@@ -270,8 +270,44 @@
                     @endcan
                 </ul>
             </li>
+            @can('training_access')
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.trainings.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/trainings") || request()->is("admin/trainings/*") ? "c-active" : "" }}">
+                        <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
+                        </i>
+                        {{ trans('cruds.training.title') }}
+                    </a>
+                </li>
+            @endcan
+
+            @can('training_apply_access')
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.training-applies.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/training-applies") || request()->is("admin/training-applies/*") ? "c-active" : "" }}">
+                        <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                        </i>
+                        {{ trans('cruds.trainingApply.list') }}
+                    </a>
+                </li>
+            @endcan
         @endif
+        @can('attendance_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.attendances.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/attendances") || request()->is("admin/attendances/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    </i>
+                    {{ trans('cruds.attendance.title') }}
+                </a>
+            </li>
+        @endcan
+        <li class="c-sidebar-nav-item">
+            <a href="{{ url("clear-cache") }}" class="c-sidebar-nav-link">
+                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                </i>
+               Cache Clear
+            </a>
+        </li>
     </ul>
 
 </div>

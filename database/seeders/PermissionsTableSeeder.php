@@ -302,9 +302,70 @@ class PermissionsTableSeeder extends Seeder
 //                'id'    => 72,
 //                'title' => 'service_status_change',
 //            ],
+//            [
+//                'id'    => 73,
+//                'title' => 'service_comments',
+//            ],
+//
+//            [
+//                'id'    => 74,
+//                'title' => 'training_create',
+//            ],
+//            [
+//                'id'    => 75,
+//                'title' => 'training_edit',
+//            ],
+//            [
+//                'id'    => 76,
+//                'title' => 'training_show',
+//            ],
+//            [
+//                'id'    => 78,
+//                'title' => 'training_delete',
+//            ],
+//            [
+//                'id'    => 79,
+//                'title' => 'training_access',
+//            ],
+//            [
+//                'id'    => 80,
+//                'title' => 'training_apply',
+//            ],
+//            [
+//                'id'    => 81,
+//                'title' => 'training_approved',
+//            ],
+//            [
+//                'id'    => 82,
+//                'title' => 'training_apply_create',
+//            ],
+//            [
+//                'id'    => 83,
+//                'title' => 'training_apply_edit',
+//            ],
+//            [
+//                'id'    => 84,
+//                'title' => 'training_apply_show',
+//            ],
+//            [
+//                'id'    => 85,
+//                'title' => 'training_apply_access',
+//            ],
             [
-                'id'    => 73,
-                'title' => 'service_comments',
+                'id'    => 86,
+                'title' => 'attendance_create',
+            ],
+            [
+                'id'    => 87,
+                'title' => 'attendance_edit',
+            ],
+            [
+                'id'    => 88,
+                'title' => 'attendance_show',
+            ],
+            [
+                'id'    => 89,
+                'title' => 'attendance_access',
             ],
         ];
 

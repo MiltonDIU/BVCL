@@ -150,4 +150,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Service::class);
     }
+
+    public function userTrainings()
+    {
+        return $this->belongsToMany(Training::class);
+    }
+
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class, 'training_id', 'id');
+    }
+
 }

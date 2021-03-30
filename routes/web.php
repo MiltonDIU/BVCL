@@ -19,6 +19,9 @@ use App\Http\Controllers\Admin\QuestionsController;
 use App\Http\Controllers\Admin\AnswersController;
 use App\Http\Controllers\Admin\AssessmentController;
 use App\Http\Controllers\Admin\ServiceHistoryController;
+use App\Http\Controllers\Admin\TrainingController;
+use App\Http\Controllers\Admin\TrainingApplyController;
+use App\Http\Controllers\Admin\AttendanceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,10 +33,12 @@ use App\Http\Controllers\Admin\ServiceHistoryController;
 |
 */
 
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('login'));
 });
-
 
 Route::get('/home', function () {
     if (session('status')) {
@@ -66,12 +71,22 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         'answers' => AnswersController::class,
         'service-histories' => ServiceHistoryController::class,
     ]);
+    // Attendances
+    Route::resources(['attendances' => AttendanceController::class],['except' => ['destroy']]);
+
+
     Route::resources(['assessments' => AssessmentController::class],['except' => ['edit', 'update']]);
     Route::resources(['audit-logs' => AuditLogsController::class],['except' => ['create', 'update','delete','edit']]);
+    //trainings
+    Route::resources(['trainings' => TrainingController::class]);
+    Route::post('trainings/apply', [TrainingController::class,'apply'])->name('trainings.apply');
+    Route::post('trainings/approved', [TrainingController::class,'approved'])->name('trainings.approved');
+    Route::get('trainings/attendance/{id}', [TrainingController::class,'attendance'])->name('trainings.attendance');
+    Route::post('trainings/attendance', [TrainingController::class,'attendanceStore'])->name('trainings.attendance.store');
 
-
-
-
+    // Training Applies
+    Route::resources(['training-applies' => TrainingApplyController::class]);
+    Route::delete('training-applies/destroy', [TrainingApplyController::class, 'massDestroy'])->name('training-applies.massDestroy');
     // Settings
 //    Route::resources(['permissions' => SettingsController::class],['except' => ['create', 'store', 'show', 'destroy']]);
     Route::post('settings/media', [SettingsController::class, 'storeMedia'])->name('settings.storeMedia');
@@ -85,8 +100,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Businesses
     Route::delete('businesses/destroy', [BusinessController::class, 'massDestroy'])->name('businesses.massDestroy');
-    Route::post('businesses/media', 'BusinessController@storeMedia')->name('businesses.storeMedia');
-    Route::post('businesses/ckmedia', 'BusinessController@storeCKEditorImages')->name('businesses.storeCKEditorImages');
+    Route::post('businesses/media', [BusinessController::class, 'storeMedia'])->name('businesses.storeMedia');
+    Route::post('businesses/ckmedia', [BusinessController::class, 'storeCKEditorImages'])->name('businesses.storeCKEditorImages');
     // service assign to
     Route::get('services/{id}/assign-to', [ServiceController::class,'assignTo'])->name('service.assign');
     Route::get('services/{id}/history', [ServiceController::class,'history'])->name('service.history');
@@ -119,6 +134,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Answers
     Route::delete('answers/destroy', [AnswersController::class, 'massDestroy'])->name('answers.massDestroy');
 
+    // Trainings
+    Route::delete('trainings/destroy', [TrainingController::class, 'massDestroy'])->name('trainings.massDestroy');
+    Route::post('trainings/media', [TrainingController::class, 'storeMedia'])->name('trainings.storeMedia');
+    Route::post('trainings/ckmedia', [TrainingController::class, 'storeCKEditorImages'])->name('trainings.storeCKEditorImages');
+
+
 
 //profile
     Route::post('profiles/media', [ProfilesController::class, 'storeMedia'])->name('profiles.storeMedia');
@@ -126,31 +147,33 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
 
 // Service Statuses
-    Route::post('service-statuses/media', 'ServiceStatusController@storeMedia')->name('service-statuses.storeMedia');
-    Route::post('service-statuses/ckmedia', 'ServiceStatusController@storeCKEditorImages')->name('service-statuses.storeCKEditorImages');
+    Route::post('service-statuses/media', [ServiceStatusController::class, 'storeMedia'])->name('service-statuses.storeMedia');
+    Route::post('service-statuses/ckmedia', [ServiceStatusController::class, 'storeCKEditorImages'])->name('service-statuses.storeCKEditorImages');
 
-// Services
-    Route::post('services/media', 'ServiceController@storeMedia')->name('services.storeMedia');
-    Route::post('services/ckmedia', 'ServiceController@storeCKEditorImages')->name('services.storeCKEditorImages');
+//// Services
+    Route::post('services/media', [ServiceController::class, 'storeMedia'])->name('services.storeMedia');
+    Route::post('services/ckmedia', [ServiceController::class, 'storeCKEditorImages'])->name('services.storeCKEditorImages');
 
     // Service Histories
-    Route::post('service-histories/media', 'ServiceHistoryController@storeMedia')->name('service-histories.storeMedia');
-    Route::post('service-histories/ckmedia', 'ServiceHistoryController@storeCKEditorImages')->name('service-histories.storeCKEditorImages');
-
-    // Audit Logs
-    //Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+    Route::post('service-histories/media', [ServiceHistoryController::class, 'storeMedia'])->name('service-histories.storeMedia');
+    Route::post('service-histories/ckmedia', [ServiceHistoryController::class, 'storeCKEditorImages'])->name('service-histories.storeCKEditorImages');
+//Audit Logs
+    Route::resources(['audit-logs' => ServiceHistoryController::class],['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 });
-
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password
     if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
         Route::get('password', [ChangePasswordController::class,'edit'])->name('password.edit');
         Route::post('password', [ChangePasswordController::class,'update'])->name('password.update');
-        Route::post('profile', 'ChangePasswordController@updateProfile')->name('password.updateProfile');
-        Route::post('profile/destroy', 'ChangePasswordController@destroy')->name('password.destroyProfile');
-
+        Route::post('profile', [ChangePasswordController::class,'updateProfile'])->name('password.updateProfile');
+        Route::post('profile/destroy', [ChangePasswordController::class,'destroy'])->name('password.destroyProfile');
         Route::get('my-profile', [ProfilesController::class, 'edit'])->name('my-profile.edit');
         Route::put('my-profile', [ProfilesController::class, 'update'])->name('my-profile.update');
     }
 });
-
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('config:cache');
+    return redirect()->back()->with('message','Cache facade value cleared');
+});

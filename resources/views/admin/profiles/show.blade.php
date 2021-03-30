@@ -135,6 +135,7 @@
             <div class="tab-pane" role="tabpanel" id="user_assessments">
                 @includeIf('admin.users.relationships.userAssessments', ['assessments' => $user->userAssessments])
             </div>
+
         </div>
     </div>
 
