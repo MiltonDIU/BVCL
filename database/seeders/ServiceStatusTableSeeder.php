@@ -33,6 +33,12 @@ class ServiceStatusTableSeeder extends Seeder
                 'slug' => 'processing',
                 'message' => 'Your service is being processed',
             ],
+            [
+                'id'    => 4,
+                'name' => 'Complete',
+                'slug' => 'complete',
+                'message' => 'Your service is being processed',
+            ],
         ];
 
         ServiceStatus::insert($statuses);

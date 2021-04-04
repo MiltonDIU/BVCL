@@ -149,11 +149,11 @@ class TrainingController extends Controller
 
     public function attendance($id){
         abort_if(Gate::denies('attendance_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-//        if (auth()->user()->is_admin) {
-//            $trainings = Training::where('id',$id)->first();
-//        } else {
-//            $trainings =  Training::where('id',$id)->where('is_active','1')->first();
-//        }
+        if (auth()->user()->is_admin) {
+            $trainings = Training::where('id',$id)->first();
+        } else {
+            $trainings =  Training::where('id',$id)->where('is_active','1')->first();
+        }
         $trainings =  Training::with('trainingTrainingApplies')->where('id',$id)->where('is_active','1')->first();
         return view('admin.trainings.attendance', compact('trainings'));
     }

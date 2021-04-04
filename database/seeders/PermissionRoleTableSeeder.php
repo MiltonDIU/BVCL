@@ -13,17 +13,24 @@ class PermissionRoleTableSeeder extends Seeder
         $admin_permissions = Permission::all();
         Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
 
-        $user_permissions = $admin_permissions->filter(function ($permission) {
-            return substr($permission->title, 0, 5) != 'role_' && substr($permission->title, 0, 11) != 'permission_';
+        $admin_permissions = $admin_permissions->filter(function ($permission) {
+            return substr($permission->title, 0, 11) != 'permission_';
         });
-        Role::findOrFail(2)->permissions()->sync($user_permissions);
+        Role::findOrFail(2)->permissions()->sync($admin_permissions);
 
-//        $client_permissions = $admin_permissions->whereIn('title', [
-//            'contract_show', 'contract_access', 'profile_password_edit'
-//        ]);
-//
-//
-//        Role::findOrFail(3)->permissions()->sync($client_permissions);
+        $teacher_permissions = $admin_permissions->whereIn('title', [
+            'attendance_create', 'profile_password_edit', 'profile_show','profile_edit'
+        ]);
+        Role::findOrFail(3)->permissions()->sync($teacher_permissions);
 
+        $user_permissions = $admin_permissions->whereIn('title', [
+            'training_access', 'training_show', 'training_apply','profile_edit', 'service_comments','service_message','service_history','service_history_access','service_history_show','service_history_create','assessment_show','assessment_access', 'assessment_create', 'assessment_show','service_access','service_show','service_create','business_access','business_show','business_edit','business_create'
+        ]);
+        Role::findOrFail(4)->permissions()->sync($user_permissions);
+
+        $special_permissions = $admin_permissions->whereIn('title', [
+            'audit_log_show', 'audit_log_access','profile_password_edit', 'profile_show','profile_edit'
+        ]);
+        Role::findOrFail(3)->permissions()->sync($special_permissions);
     }
 }

@@ -73,7 +73,7 @@
                                 {{ $country->nationality ?? '' }}
                             </td>
                             <td>
-                                {{ App\Models\Country::IS_ACTIVE_RADIO[$country->is_active] ?? '' }}
+                                {{ $country->is_active }}
                             </td>
                             <td>
                                 @can('country_show')
