@@ -224,14 +224,6 @@
         @endif
 
 
-        <li class="c-sidebar-nav-item">
-            <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">
-
-                </i>
-                {{ trans('global.logout') }}
-            </a>
-        </li>
 
         @if(Gate::check('question_access') || Gate::check('answer_access')|| Gate::check('assessment_access'))
             <li class="c-sidebar-nav-dropdown">
@@ -308,6 +300,16 @@
                Cache Clear
             </a>
         </li>
+
+        <li class="c-sidebar-nav-item">
+            <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">
+
+                </i>
+                {{ trans('global.logout') }}
+            </a>
+        </li>
+
     </ul>
 
 </div>
