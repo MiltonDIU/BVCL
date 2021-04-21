@@ -154,7 +154,6 @@ class TrainingController extends Controller
         } else {
             $trainings =  Training::where('id',$id)->where('is_active','1')->first();
         }
-        $trainings =  Training::with('trainingTrainingApplies')->where('id',$id)->where('is_active','1')->first();
         return view('admin.trainings.attendance', compact('trainings'));
     }
 

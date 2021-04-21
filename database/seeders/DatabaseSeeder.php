@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
 //            PermissionRoleTableSeeder::class,
 //            UsersTableSeeder::class,
 //            RoleUserTableSeeder::class,
-            CountryTableSeeder::class,
+            //CountryTableSeeder::class,
 //            BusinessCategoryTableSeeder::class,
 //            ServiceStatusTableSeeder::class,
-//            DayTableSeeder::class,
+            DayTableSeeder::class,
 
         ]);
     }
