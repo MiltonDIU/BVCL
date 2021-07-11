@@ -39,6 +39,9 @@ class BusinessController extends Controller
         abort_if(Gate::denies('business_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $business_categories = BusinessCategory::all()->pluck('name', 'id');
+        if(count($business_categories)==0){
+            return redirect(route('admin.business-categories.create'));
+        }
         return view('admin.businesses.create', compact('business_categories'));
     }
 

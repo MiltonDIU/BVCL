@@ -39,8 +39,16 @@ class TrainingController extends Controller
     {
         abort_if(Gate::denies('training_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::all()->pluck('name', 'id');
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('id','!=',config('panel.registration_default_role'));
+        })->get()->pluck('name', 'id');
+
         $days = Day::all()->pluck('name', 'id');
+
+        if(count($users)==0){
+            return redirect(route('admin.users.create'));
+        }
+
         return view('admin.trainings.create', compact('users','days'));
     }
 

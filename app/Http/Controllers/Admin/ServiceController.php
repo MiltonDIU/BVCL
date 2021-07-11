@@ -39,9 +39,10 @@ class ServiceController extends Controller
     {
         abort_if(Gate::denies('service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-//        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-//        $service_statuses = ServiceStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+      $service_statuses = ServiceStatus::all()->pluck('name', 'id');
+      if(count($service_statuses)==0){
+    return redirect(route('admin.service-statuses.create'));
+}
 
         return view('admin.services.create');
     }
@@ -156,9 +157,10 @@ class ServiceController extends Controller
     {
         abort_if(Gate::denies('service_assign_to'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $service = Service::find($id);
-        $assigns = User::all()->pluck('name', 'id');
+        $assigns = User::whereHas('roles', function ($query) {
+            $query->where('id','!=',config('panel.registration_default_role'));
+        })->get()->pluck('name', 'id');
         $service_statuses = ServiceStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         return view('admin.services.assign-to',compact('service','assigns','service_statuses'));
     }
 
