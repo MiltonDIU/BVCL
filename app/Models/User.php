@@ -22,6 +22,14 @@ class User extends Authenticatable
 
     public $table = 'users';
 
+    const IS_APPROVED = [
+        '1' => 'Yes',
+        '0' => 'No',
+    ];
+    const IS_VERIFIED = [
+        '1' => 'Yes',
+        '0' => 'No',
+    ];
     protected $hidden = [
         'remember_token',
         'password',

@@ -19,7 +19,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if (!auth()->user()->is_admin) {
+        if (auth()->user()->is_admin) {
             $users = User::all();
         } else {
             $users = User::whereHas('roles', function($q) {

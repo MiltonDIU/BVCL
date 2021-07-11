@@ -73,6 +73,8 @@ return [
             'verification_token_helper' => ' ',
             'approved'                  => 'Approved',
             'approved_helper'           => ' ',
+            'verified'                  => 'Verified',
+            'verified_helper'           => ' ',
             'action' => 'Action',
         ],
     ],
