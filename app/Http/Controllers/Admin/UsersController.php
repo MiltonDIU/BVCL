@@ -18,12 +18,11 @@ class UsersController extends Controller
     public function index()
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         if (auth()->user()->is_admin) {
             $users = User::all();
         } else {
             $users = User::whereHas('roles', function($q) {
-                $q->where('id', 2); //2 is manual it's student or registered user id
+                $q->where('id', config('panel.registration_default_role')); //config('panel.registration_default_role') default registration user roles set panel.php under config folder
             })->get();
         }
 

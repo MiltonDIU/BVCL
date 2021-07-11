@@ -66,6 +66,7 @@ class User extends Authenticatable
     public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();
+        //return $this->roles()->whereIn('id', [2,1])->exists();// multiple roles check as a is_admin power
     }
 
     public function __construct(array $attributes = [])
