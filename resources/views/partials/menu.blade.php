@@ -15,6 +15,7 @@
                 {{ trans('global.dashboard') }}
             </a>
         </li>
+
         @can('user_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -69,7 +70,54 @@
         @endcan
 
 
-        @if(Gate::check('business_category_access') || Gate::check('business_access'))
+
+
+        @if(Gate::check('setting_access') || Gate::check('country_access'))
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.setting.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('setting_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.settings.edit") }}" class="c-sidebar-nav-link {{ request()->is("admin/settings") || request()->is("admin/settings/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-wrench c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.setting.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('country_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.countries.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/countries") || request()->is("admin/countries/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-globe c-sidebar-nav-icon">
+                                </i>
+                                {{ trans('cruds.country.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endif
+
+
+        @can('profile_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.profiles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin.profiles") || request()->is("admin.profiles/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.profile.title') }}
+                </a>
+            </li>
+        @endcan
+
+
+    @if(Gate::check('business_category_access') || Gate::check('business_access'))
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon">
@@ -103,46 +151,7 @@
             </li>
         @endif
 
-
-
-
-        @if(Gate::check('setting_access') || Gate::check('country_access'))
-            <li class="c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
-
-                    </i>
-                    {{ trans('cruds.setting.title') }}
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    @can('setting_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.settings.edit") }}" class="c-sidebar-nav-link {{ request()->is("admin/settings") || request()->is("admin/settings/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-wrench c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.setting.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                        @can('country_access')
-                            <li class="c-sidebar-nav-item">
-                                <a href="{{ route("admin.countries.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/countries") || request()->is("admin/countries/*") ? "c-active" : "" }}">
-                                    <i class="fa-fw fas fa-globe c-sidebar-nav-icon">
-                                    </i>
-                                    {{ trans('cruds.country.title') }}
-                                </a>
-                            </li>
-                        @endcan
-                </ul>
-            </li>
-        @endif
-
-
-
-
-
-        @if(Gate::check('service_status_access') || Gate::check('service_access') || Gate::check('service_history_access'))
+    @if(Gate::check('service_status_access') || Gate::check('service_access') || Gate::check('service_history_access'))
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fab fa-servicestack c-sidebar-nav-icon">
@@ -186,45 +195,6 @@
             </li>
         @endif
 
-
-
-
-    @can('profile_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.profiles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin.profiles") || request()->is("admin.profiles/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">
-
-                    </i>
-                    {{ trans('cruds.profile.title') }}
-                </a>
-            </li>
-        @endcan
-
-        @can('profile_edit')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("profile.my-profile.edit") }}" class="c-sidebar-nav-link {{ request()->is("profile/my-profile") || request()->is("profile/my-profile/*") ? "c-active" : "" }}">
-                    <i class="far fa-id-card c-sidebar-nav-icon">
-
-                    </i>
-                    {{ trans('global.my_profile') }}
-                </a>
-            </li>
-        @endcan
-
-        @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-            @can('profile_password_edit')
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}" href="{{ route('profile.password.edit') }}">
-                        <i class="fa-fw fas fa-key c-sidebar-nav-icon">
-                        </i>
-                        {{ trans('global.change_password') }}
-                    </a>
-                </li>
-            @endcan
-        @endif
-
-
-
         @if(Gate::check('question_access') || Gate::check('answer_access')|| Gate::check('assessment_access'))
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -262,28 +232,41 @@
                     @endcan
                 </ul>
             </li>
+        @endif
+
+
+        @if(Gate::check('training_access') || Gate::check('training_apply_access'))
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-fill-drip c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.training.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
             @can('training_access')
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route("admin.trainings.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/trainings") || request()->is("admin/trainings/*") ? "c-active" : "" }}">
-                        <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
-
+                        <i class="fa-fw fab fa-tumblr c-sidebar-nav-icon">
                         </i>
                         {{ trans('cruds.training.title') }}
                     </a>
                 </li>
             @endcan
-
             @can('training_apply_access')
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route("admin.training-applies.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/training-applies") || request()->is("admin/training-applies/*") ? "c-active" : "" }}">
-                        <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                        <i class="fa-fw fas fa-list-alt c-sidebar-nav-icon">
 
                         </i>
                         {{ trans('cruds.trainingApply.list') }}
                     </a>
                 </li>
             @endcan
+                </ul>
+            </li>
         @endif
+
         @can('attendance_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.attendances.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/attendances") || request()->is("admin/attendances/*") ? "c-active" : "" }}">
@@ -293,6 +276,32 @@
                 </a>
             </li>
         @endcan
+
+
+    @can('profile_edit')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("profile.my-profile.edit") }}" class="c-sidebar-nav-link {{ request()->is("profile/my-profile") || request()->is("profile/my-profile/*") ? "c-active" : "" }}">
+                    <i class="far fa-id-card c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('global.my_profile') }}
+                </a>
+            </li>
+        @endcan
+
+        @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+            @can('profile_password_edit')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}" href="{{ route('profile.password.edit') }}">
+                        <i class="fa-fw fas fa-key c-sidebar-nav-icon">
+                        </i>
+                        {{ trans('global.change_password') }}
+                    </a>
+                </li>
+            @endcan
+        @endif
+
+        @if (auth()->user()->is_admin)
         <li class="c-sidebar-nav-item">
             <a href="{{ url("clear-cache") }}" class="c-sidebar-nav-link">
                 <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
@@ -300,7 +309,7 @@
                Cache Clear
             </a>
         </li>
-
+        @endif
         <li class="c-sidebar-nav-item">
             <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">
