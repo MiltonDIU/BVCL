@@ -54,6 +54,7 @@ class UsersTableSeeder extends Seeder
                 'verification_token' => '',
                 'approved'           => 1,
             ],
+
             [
                 'id'             => 5,
                 'name'           => 'Special',
