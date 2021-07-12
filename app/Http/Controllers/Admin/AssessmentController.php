@@ -6,6 +6,7 @@ use App\Http\Requests\MassDestroyAssessmentRequest;
 use App\Http\Requests\StoreAssessmentRequest;
 use App\Models\Assessment;
 use App\Models\Question;
+use App\Models\Site;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -28,6 +29,10 @@ class AssessmentController extends Controller
     {
         abort_if(Gate::denies('assessment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $questions = Question::with('answers')->where('is_active','1')->get();
+        if (count($questions)==0){
+            $message = "Currently not access this page, Please Contact <strong>".Site::config()->site_email."</strong>";
+            return view('admin.not-access',compact('message'));
+        }
         return view('admin.assessments.create', compact('questions'));
     }
 
