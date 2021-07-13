@@ -71,7 +71,12 @@ class ServiceController extends Controller
     {
         abort_if(Gate::denies('service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if (!auth()->user()->is_admin) {
-            if (auth()->id()!=$service->user_id){
+            $services = Service::whereHas('assigns', function ($query) {
+                $query->where('user_id',auth()->id());
+            })->where('id',$service->id)->get();
+
+
+            if ((auth()->id()!=$service->user_id) and (count($services)==0)){
                 return redirect('not-allowed');
             }
         }
@@ -88,7 +93,10 @@ class ServiceController extends Controller
     public function update(UpdateServiceRequest $request, Service $service)
     {
         if (!auth()->user()->is_admin) {
-            if (auth()->id()!=$service->user_id){
+            $services = Service::whereHas('assigns', function ($query) {
+                $query->where('user_id',auth()->id());
+            })->where('id',$service->id)->get();
+            if ((auth()->id()!=$service->user_id) and (count($services)==0)){
                 return redirect('not-allowed');
             }
         }
@@ -177,14 +185,19 @@ class ServiceController extends Controller
         $service = Service::find($request->service_id);
         $data['service_status_id']  = $request->service_status_id;
         if (!auth()->user()->is_admin) {
-            if (auth()->id()!=$service->user_id){
+            $services = Service::whereHas('assigns', function ($query) {
+                $query->where('user_id',auth()->id());
+            })->where('id',$service->id)->get();
+
+
+            if ((auth()->id()!=$service->user_id) and (count($services)==0)){
                 return redirect('not-allowed');
             }
         }
         $service->update($data);
         $service->assigns()->sync($request->input('assigns', []));
         $data['user_id'] =  auth()->id();
-        $data['service_id'] =  $service->user_id;
+        $data['service_id'] =  $service->id;
         $data['content'] =  $request->comments;
         ServiceHistory::create($data);
         return redirect()->route('admin.services.index');
@@ -204,13 +217,17 @@ class ServiceController extends Controller
         $service = Service::find($request->service_id);
         $data['service_status_id']  = $request->service_status_id;
         if (!auth()->user()->is_admin) {
-            if (auth()->id()!=$service->user_id){
+            $services = Service::whereHas('assigns', function ($query) {
+                $query->where('user_id',auth()->id());
+            })->where('id',$service->id)->get();
+
+            if ((auth()->id()!=$service->user_id) and (count($services)==0)){
                 return redirect('not-allowed');
             }
         }
         $service->update($data);
         $data['user_id'] =  auth()->id();
-        $data['service_id'] =  $service->user_id;
+        $data['service_id'] =  $service->id;
         $data['content'] =  $request->comments;
         ServiceHistory::create($data);
         return redirect()->route('admin.services.index');
@@ -228,12 +245,17 @@ class ServiceController extends Controller
     {
         $service = Service::find($request->service_id);
         if (!auth()->user()->is_admin) {
-            if (auth()->id()!=$service->user_id){
+            $services = Service::whereHas('assigns', function ($query) {
+                $query->where('user_id',auth()->id());
+            })->where('id',$service->id)->get();
+
+
+            if ((auth()->id()!=$service->user_id) and (count($services)==0)){
                 return redirect('not-allowed');
             }
         }
         $data['user_id'] =  auth()->id();
-        $data['service_id'] =  $service->user_id;
+        $data['service_id'] =  $service->id;
         $data['content'] =  $request->comments;
         ServiceHistory::create($data);
         return redirect()->route('admin.services.index');
