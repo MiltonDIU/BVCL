@@ -355,18 +355,18 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 86,
                 'title' => 'attendance_create',
             ],
-//            [
-//                'id'    => 87,
-//                'title' => 'attendance_edit',
-//            ],
-//            [
-//                'id'    => 88,
-//                'title' => 'attendance_show',
-//            ],
-//            [
-//                'id'    => 89,
-//                'title' => 'attendance_access',
-//            ],
+            [
+                'id'    => 87,
+                'title' => 'attendance_edit',
+            ],
+            [
+                'id'    => 88,
+                'title' => 'attendance_show',
+            ],
+            [
+                'id'    => 89,
+                'title' => 'attendance_access',
+            ],
         ];
 
         Permission::insert($permissions);
