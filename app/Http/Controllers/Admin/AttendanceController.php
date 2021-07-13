@@ -27,11 +27,11 @@ class AttendanceController extends Controller
     {
         abort_if(Gate::denies('attendance_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $trainings = Training::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
-        if (count($trainings)>=1){
-            $message = "Currently not access this page, Please Contact <strong>".Site::config()->site_email."</strong>";
-            return view('admin.not-access',compact('message'));
-        }
+        $trainings = Training::where('is_active',1)->get()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+//        if (count($trainings)>=1){
+//            $message = "Currently not access this page, Please Contact <strong>".Site::config()->site_email."</strong>";
+//            return view('admin.not-access',compact('message'));
+//        }
         return view('admin.attendances.create', compact('trainings'));
     }
 

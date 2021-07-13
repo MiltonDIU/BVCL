@@ -11,6 +11,7 @@ class CreateAttendancesTable extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('training_id');
+            $table->unsignedBigInteger('event_date');
             $table->foreign('training_id', 'training_id_23032021')->references('id')->on('trainings')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id', 'user_id_23032021')->references('id')->on('users')->onDelete('cascade');

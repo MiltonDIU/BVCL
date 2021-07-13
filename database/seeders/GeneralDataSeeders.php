@@ -41,7 +41,7 @@ class GeneralDataSeeders extends Seeder
 //                'title'          => $faker->paragraph(1),
 //                'description'       =>  $faker->realText(250,2),
 //                'duration' => $faker->randomElement(['3 Month','2 Month','6 Month']),
-//                'start_date'           => $faker->date('Y-m-d'),
+//                'start_date'           => date('Y-m-d'),
 //                'end_date'           => '2021-10-30',
 //                'outcome'        => $faker->paragraph(5),
 //                'created_at' => Carbon::now()->toDateTimeString(),
@@ -55,8 +55,8 @@ class GeneralDataSeeders extends Seeder
 //                    $training->days()->attach($day_id, array('begin_time' => '10:00:00', 'close_time' => '12:00:00'));
 //                }
 //        }
-
-
+//
+//
 //        for ($i = 1; $i < 10; $i++) {// user add
 //            $users = [
 //                'name'           => $faker->firstName.' '.$faker->lastName,
@@ -72,7 +72,7 @@ class GeneralDataSeeders extends Seeder
 //            ];
 //            $user = User::create($users);
 //        }
-
+//
 //
 //        foreach ($students as $key=> $student){ //training apply
 //            for ($i=0; $i<count($trainings); $i++){
@@ -84,8 +84,8 @@ class GeneralDataSeeders extends Seeder
 //                    }
 //            }
 //        }
-
-
+//
+//
 //        foreach ($students as $key=> $student){ //bussiness add
 //            for ($i=0; $i<2; $i++) {
 //                $business = [

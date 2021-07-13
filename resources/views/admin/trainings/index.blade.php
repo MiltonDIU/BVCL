@@ -75,13 +75,21 @@
                             <td>
 
                                 @can('attendance_access')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.trainings.attendance',$training->id) }}">
+                                    @if(auth()->user()->is_admin)
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.trainings.attendance',encrypt($training->id)) }}">
                                         {{ trans('global.attendance') }}
                                     </a>
+                                    @else
+                                        @if($training->is_active==1)
+                                            <a class="btn btn-xs btn-primary" href="{{ route('admin.trainings.attendance',encrypt($training->id)) }}">
+                                                {{ trans('global.attendance') }}
+                                            </a>
+                                            @endif
+                                    @endif
                                 @endcan
 
                                 @can('training_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.trainings.show', $training->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.trainings.show',encrypt($training->id)) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan

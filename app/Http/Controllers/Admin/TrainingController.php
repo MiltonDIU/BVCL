@@ -21,7 +21,8 @@ use Symfony\Component\HttpFoundation\Response;
 class TrainingController extends Controller
 {
     use MediaUploadingTrait;
-
+//decrypt($id)
+//encrypt($assessment->id))
     public function index()
     {
         abort_if(Gate::denies('training_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -29,7 +30,11 @@ class TrainingController extends Controller
         if (auth()->user()->is_admin) {
             $trainings = Training::with(['users'])->get();
         } else {
-            $trainings =  Training::with(['users'])->where('is_active','2')->get();
+//            $trainings =  Training::with(['users'])->where('is_active','2')->get();
+//            $trainings =  Training::with(['users'])->where('is_active','2')->get();
+            $trainings = Training::whereHas('users', function ($query) {
+                $query->where('user_id',auth()->id());
+            })->get();
         }
 
         return view('admin.trainings.index', compact('trainings'));
@@ -104,10 +109,10 @@ class TrainingController extends Controller
         return redirect()->route('admin.trainings.index');
     }
 
-    public function show(Training $training)
+    public function show($id)
     {
         abort_if(Gate::denies('training_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+$training = Training::find(decrypt($id));
         $training->load('users');
 
         return view('admin.trainings.show', compact('training'));
@@ -157,11 +162,13 @@ class TrainingController extends Controller
 
     public function attendance($id){
         abort_if(Gate::denies('attendance_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if (auth()->user()->is_admin) {
-            $trainings = Training::where('id',$id)->first();
+            $trainings = Training::where('id',decrypt($id))->first();
         } else {
-            $trainings =  Training::where('id',$id)->where('is_active','1')->first();
+            $trainings =  Training::where('id',decrypt($id))->where('is_active','1')->first();
         }
+
         return view('admin.trainings.attendance', compact('trainings'));
     }
 

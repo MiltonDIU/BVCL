@@ -112,6 +112,7 @@ class Training extends Model implements HasMedia
     }
     public static function checkAttendance($training_id,$user_id,$date)
     {
+
        $event = Attendance::where('training_id',$training_id)->where('user_id',$user_id)->where('event_date',$date)->first();
         if ($event!=null){
             return true;
