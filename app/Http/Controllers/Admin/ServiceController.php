@@ -27,10 +27,12 @@ class ServiceController extends Controller
         if (auth()->user()->is_admin) {
             $services = Service::with(['user', 'service_status', 'media'])->get();
         } else {
-            $services = Service::with(['user', 'service_status', 'media'])->where('user_id',auth()->id())->get();
+            $services = Service::with(['user', 'service_status', 'media'])
+                ->where('user_id',auth()->id())
+                ->orWhereHas('assigns', function ($query) {
+                    $query->where('user_id',auth()->id());
+                })->get();
         }
-
-
 
         return view('admin.services.index', compact('services'));
     }
@@ -112,7 +114,13 @@ class ServiceController extends Controller
         abort_if(Gate::denies('service_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if (!auth()->user()->is_admin) {
-            if (auth()->id()!=$service->user_id){
+
+            $services = Service::whereHas('assigns', function ($query) {
+                    $query->where('user_id',auth()->id());
+                })->where('id',$service->id)->get();
+
+
+            if ((auth()->id()!=$service->user_id) and (count($services)==0)){
                 return redirect('not-allowed');
             }
         }

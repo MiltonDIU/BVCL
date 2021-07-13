@@ -37,7 +37,7 @@
                                     </a>
                       @endif
                       <h3 class="tree__event-title">{{$history->user->name}}
-                          {!! (($key+1)/2==0)?"tree__small-point--middle-indent":"5"  !!}
+{{--                          {!! (($key+1)/2==0)?"tree__small-point--middle-indent":""  !!}--}}
                       </h3>
                       <p class="tree__event-data">{{ "(".$history->created_at->diffForHumans().")" }}</p>
                       <p class="tree__event-text">{!! $history->content !!}</p>
