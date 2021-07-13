@@ -26,7 +26,7 @@ class AttendanceController extends Controller
     public function create()
     {
         abort_if(Gate::denies('attendance_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+return redirect(route('admin.trainings.index'));
         $trainings = Training::where('is_active',1)->get()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
 //        if (count($trainings)>=1){
 //            $message = "Currently not access this page, Please Contact <strong>".Site::config()->site_email."</strong>";

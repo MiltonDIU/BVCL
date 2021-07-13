@@ -267,15 +267,15 @@
             </li>
         @endif
 
-        @can('attendance_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.attendances.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/attendances") || request()->is("admin/attendances/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
-                    </i>
-                    {{ trans('cruds.attendance.title') }}
-                </a>
-            </li>
-        @endcan
+{{--        @can('attendance_access')--}}
+{{--            <li class="c-sidebar-nav-item">--}}
+{{--                <a href="{{ route("admin.attendances.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/attendances") || request()->is("admin/attendances/*") ? "c-active" : "" }}">--}}
+{{--                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">--}}
+{{--                    </i>--}}
+{{--                    {{ trans('cruds.attendance.title') }}--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
 
 
     @can('profile_edit')
