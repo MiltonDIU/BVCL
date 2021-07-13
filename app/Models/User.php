@@ -95,7 +95,7 @@ class User extends Authenticatable
                     $user->roles()->attach($registrationRole);
                 }
 
-                $user->notify(new VerifyUserNotification($user));
+//                $user->notify(new VerifyUserNotification($user));
             }
         });
     }

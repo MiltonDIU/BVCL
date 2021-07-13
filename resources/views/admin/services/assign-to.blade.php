@@ -12,7 +12,7 @@
 
                 <div class="form-group">
                     <label for="name"><h4>{{ trans('cruds.service.name_of_service') }}  {{$service->name}}</h4></label>
-                    <input type="text" name="service_id" id="service_id" value="{{$service->id}}">
+                    <input type="hidden" name="service_id" id="service_id" value="{{$service->id}}">
                     @if($errors->has('name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('name') }}
